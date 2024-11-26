@@ -9,12 +9,12 @@ Success
 --- JaCoCo coverage
 Line coverage: 59/67
 Instruction coverage: 413/451
-Branch coverage: 77/90
-Partially covered lines: 45, 72
+Branch coverage: 80/90
+Partially covered lines: 72
 Lines not covered: 135, 136, 137, 138, 140, 141, 142, 145
 
 --- Mutation testing
-70/75 killed
+72/75 killed
 
 --- Code checks
 No code checks to be assessed
@@ -23,11 +23,11 @@ No code checks to be assessed
 0/0 passed
 
 --- Assessment
-Branch coverage: 77/90 (overall weight=0.50)
-Mutation coverage: 70/75 (overall weight=0.50)
+Branch coverage: 80/90 (overall weight=0.50)
+Mutation coverage: 72/75 (overall weight=0.50)
 Code checks: 0/0 (overall weight=0.00)
 Meta tests: 0/0 (overall weight=0.00)
 
-Final grade: 89/100
+Final grade: 92/100
 
-Andy is running in PRACTICE mode and took 4.0 seconds to assess your solution.
+Andy is running in PRACTICE mode and took 3.9 seconds to assess your solution.

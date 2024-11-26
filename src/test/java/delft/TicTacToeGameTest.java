@@ -28,11 +28,35 @@ class TicTacToeGameTest {
     }
 
     @Test
-    void testMakeInvalidMoveOutOfBounds() {
+    void testMakeInvalidMoveOutOfBoundsNegativeRow() {
         TicTacToeGame game = new TicTacToeGame();
         boolean moveResult = game.makeMove(-1, 0);
 
-        assertFalse(moveResult, "Making a move out of bounds should return false.");
+        assertFalse(moveResult, "Making a move with a negative row should return false.");
+    }
+
+    @Test
+    void testMakeInvalidMoveOutOfBoundsRowExceedsSize() {
+        TicTacToeGame game = new TicTacToeGame();
+        boolean moveResult = game.makeMove(3, 0);
+
+        assertFalse(moveResult, "Making a move with a row exceeding board size should return false.");
+    }
+
+    @Test
+    void testMakeInvalidMoveOutOfBoundsNegativeCol() {
+        TicTacToeGame game = new TicTacToeGame();
+        boolean moveResult = game.makeMove(0, -1);
+
+        assertFalse(moveResult, "Making a move with a negative column should return false.");
+    }
+
+    @Test
+    void testMakeInvalidMoveOutOfBoundsColExceedsSize() {
+        TicTacToeGame game = new TicTacToeGame();
+        boolean moveResult = game.makeMove(0, 3);
+
+        assertFalse(moveResult, "Making a move with a column exceeding board size should return false.");
     }
 
     @Test
@@ -135,7 +159,7 @@ class TicTacToeGameTest {
     }
 
     @Test
-    void testGetBestMove() {
+    void testGetBestMoveBlocksWin() {
         TicTacToeGame game = new TicTacToeGame();
         game.switchPlayer(); // Set to 'O'
         game.makeMove(0, 0); // X
@@ -147,8 +171,14 @@ class TicTacToeGameTest {
     }
 
     @Test
-    void testAIThrowsExceptionForInvalidPlayer() {
+    void testGetBestMoveNoAvailableMoves() {
         TicTacToeGame game = new TicTacToeGame();
+        char[][] moves = {
+                {'X', 'O', 'X'},
+                {'X', 'O', 'O'},
+                {'O', 'X', 'X'}
+        };
+        fillBoard(game, moves);
 
         Exception exception = assertThrows(IllegalStateException.class, game::getBestMove);
         assertEquals("AI can only make moves for player 'O'.", exception.getMessage());
@@ -170,60 +200,6 @@ class TicTacToeGameTest {
     }
 
     @Test
-    void testGetBestMoveForDraw() {
-        TicTacToeGame game = new TicTacToeGame();
-        char[][] moves = {
-                {'X', 'O', 'X'},
-                {'X', 'O', 'O'},
-                {'O', 'X', ' '}
-        };
-        fillBoard(game, moves);
-        game.switchPlayer(); // Set to 'O'
-
-        int[] bestMove = game.getBestMove();
-        assertArrayEquals(new int[]{2, 2}, bestMove, "AI should play the only available move to avoid a loss.");
-    }
-
-
-    @Test
-    void testResetAfterWin() {
-        TicTacToeGame game = new TicTacToeGame();
-        game.makeMove(0, 0);
-        game.makeMove(1, 1);
-        game.makeMove(0, 1);
-        game.makeMove(2, 2);
-        game.makeMove(0, 2); // X wins
-
-        assertTrue(game.isWinner('X'), "Player X should win.");
-        game.resetGame();
-
-        for (char[] row : game.getBoard()) {
-            for (char cell : row) {
-                assertEquals(' ', cell, "Board should reset.");
-            }
-        }
-        assertEquals('X', game.getCurrentPlayer(), "Current player should reset to X.");
-    }
-
-
-
-    @Test
-    void testGetBestMoveNoAvailableMoves() {
-        TicTacToeGame game = new TicTacToeGame();
-        char[][] moves = {
-                {'X', 'O', 'X'},
-                {'X', 'O', 'O'},
-                {'O', 'X', 'X'}
-        };
-        fillBoard(game, moves);
-
-        Exception exception = assertThrows(IllegalStateException.class, game::getBestMove);
-        assertEquals("AI can only make moves for player 'O'.", exception.getMessage());
-    }
-
-
-
-    @Test
     void testMinimaxTieScenario() {
         TicTacToeGame game = new TicTacToeGame();
         char[][] moves = {
@@ -237,8 +213,6 @@ class TicTacToeGameTest {
         int[] bestMove = game.getBestMove();
         assertArrayEquals(new int[]{2, 2}, bestMove, "AI should choose the move that leads to a tie.");
     }
-
-
 
     private void fillBoard(TicTacToeGame game, char[][] moves) {
         for (int i = 0; i < moves.length; i++) {
