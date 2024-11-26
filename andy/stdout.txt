@@ -4,17 +4,17 @@ Andy v0.28-575d45a (2022-05-03T17:35:52+0200)
 Success
 
 --- JUnit execution
-11/11 passed
+14/14 passed
 
 --- JaCoCo coverage
 Line coverage: 59/67
-Instruction coverage: 413/451
-Branch coverage: 78/90
-Partially covered lines: 45
+Instruction coverage: 399/451
+Branch coverage: 73/90
+Partially covered lines: 45, 72, 114, 116
 Lines not covered: 135, 136, 137, 138, 140, 141, 142, 145
 
 --- Mutation testing
-75/75 killed
+69/75 killed
 
 --- Code checks
 No code checks to be assessed
@@ -23,11 +23,11 @@ No code checks to be assessed
 0/0 passed
 
 --- Assessment
-Branch coverage: 78/90 (overall weight=0.50)
-Mutation coverage: 75/75 (overall weight=0.50)
+Branch coverage: 73/90 (overall weight=0.50)
+Mutation coverage: 69/75 (overall weight=0.50)
 Code checks: 0/0 (overall weight=0.00)
 Meta tests: 0/0 (overall weight=0.00)
 
-Final grade: 93/100
+Final grade: 87/100
 
-Andy is running in PRACTICE mode and took 5.5 seconds to assess your solution.
+Andy is running in PRACTICE mode and took 3.7 seconds to assess your solution.
