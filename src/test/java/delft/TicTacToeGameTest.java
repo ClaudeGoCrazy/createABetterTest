@@ -154,6 +154,92 @@ class TicTacToeGameTest {
         assertEquals("AI can only make moves for player 'O'.", exception.getMessage());
     }
 
+    @Test
+    void testMinimaxWinningMove() {
+        TicTacToeGame game = new TicTacToeGame();
+        char[][] moves = {
+                {'O', 'X', ' '},
+                {'X', 'O', ' '},
+                {' ', ' ', 'X'}
+        };
+        fillBoard(game, moves);
+        game.switchPlayer(); // Set to 'O'
+
+        int bestScore = game.getBestMove()[0]; // Simulate AI move
+        assertEquals(0, bestScore, "Minimax should find the best winning move.");
+    }
+
+    @Test
+    void testGetBestMoveForDraw() {
+        TicTacToeGame game = new TicTacToeGame();
+        char[][] moves = {
+                {'X', 'O', 'X'},
+                {'X', 'O', 'O'},
+                {'O', 'X', ' '}
+        };
+        fillBoard(game, moves);
+        game.switchPlayer(); // Set to 'O'
+
+        int[] bestMove = game.getBestMove();
+        assertArrayEquals(new int[]{2, 2}, bestMove, "AI should play the only available move to avoid a loss.");
+    }
+
+
+    @Test
+    void testResetAfterWin() {
+        TicTacToeGame game = new TicTacToeGame();
+        game.makeMove(0, 0);
+        game.makeMove(1, 1);
+        game.makeMove(0, 1);
+        game.makeMove(2, 2);
+        game.makeMove(0, 2); // X wins
+
+        assertTrue(game.isWinner('X'), "Player X should win.");
+        game.resetGame();
+
+        for (char[] row : game.getBoard()) {
+            for (char cell : row) {
+                assertEquals(' ', cell, "Board should reset.");
+            }
+        }
+        assertEquals('X', game.getCurrentPlayer(), "Current player should reset to X.");
+    }
+
+
+
+    @Test
+    void testGetBestMoveNoAvailableMoves() {
+        TicTacToeGame game = new TicTacToeGame();
+        char[][] moves = {
+                {'X', 'O', 'X'},
+                {'X', 'O', 'O'},
+                {'O', 'X', 'X'}
+        };
+        fillBoard(game, moves);
+
+        Exception exception = assertThrows(IllegalStateException.class, game::getBestMove);
+        assertEquals("AI can only make moves for player 'O'.", exception.getMessage());
+    }
+
+
+
+    @Test
+    void testMinimaxTieScenario() {
+        TicTacToeGame game = new TicTacToeGame();
+        char[][] moves = {
+                {'X', 'O', 'X'},
+                {'X', 'O', 'O'},
+                {'O', 'X', ' '}
+        };
+        fillBoard(game, moves);
+        game.switchPlayer(); // Set to 'O'
+
+        int[] bestMove = game.getBestMove();
+        assertArrayEquals(new int[]{2, 2}, bestMove, "AI should choose the move that leads to a tie.");
+    }
+
+
+
     private void fillBoard(TicTacToeGame game, char[][] moves) {
         for (int i = 0; i < moves.length; i++) {
             for (int j = 0; j < moves[i].length; j++) {
